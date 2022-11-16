@@ -1,10 +1,19 @@
-#!/bin/bash
-
-export MYURL="https://raw.githubusercontent.com/Vasiliy-Basov/GCP/main/install_ruby.sh"
-bash -c "$(curl -L $MYURL )
-
-export MYURL1="https://raw.githubusercontent.com/Vasiliy-Basov/GCP/main/install_mnogodb.sh"
-bash -c "$(curl -L $MYURL1 )
-
-export MYURL2="https://raw.githubusercontent.com/Vasiliy-Basov/GCP/main/deploy.sh"
-bash -c "$(curl -L $MYURL2 )
+#! /bin/sh
+#Setup Ruby
+apt update
+apt install -y ruby-full ruby-bundler build-essential
+# Installing Mongodb
+curl -fsSL https://www.mongodb.org/static/pgp/server-3.6.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+# tee — команда, выводит на экран, или же перенаправляет выходной материал команды и копирует его в файл или в переменную
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl start mongod
+sudo systemctl enable mongod
+# Since instances run startup scripts as root, and we don't want our web-server to have such privileges,
+# we need to use either runuser or su to workaround that.
+# For reference:
+# https://www.cyberciti.biz/open-source/command-line-hacks/linux-run-command-as-different-user/
+runuser -l appuser -c 'git clone -b monolith https://github.com/express42/reddit.git'
+runuser -l appuser -c 'cd reddit && bundle install'
+runuser -l appuser -c 'cd reddit && puma -d'
