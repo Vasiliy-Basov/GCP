@@ -14,6 +14,6 @@ sudo systemctl enable mongod
 # we need to use either runuser or su to workaround that.
 # For reference:
 # https://www.cyberciti.biz/open-source/command-line-hacks/linux-run-command-as-different-user/
-runuser -l appuser -c 'git clone -b monolith https://github.com/express42/reddit.git'
-runuser -l appuser -c 'cd reddit && bundle install'
-runuser -l appuser -c 'cd reddit && puma -d'
+runuser -l baggurd -c 'git clone -b monolith https://github.com/express42/reddit.git'
+runuser -l baggurd -c 'cd reddit && bundle install'
+runuser -l baggurd -c 'cd reddit && puma -d'
