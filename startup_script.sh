@@ -4,7 +4,7 @@ apt update
 apt install -y ruby-full ruby-bundler build-essential
 # Installing Mongodb
 curl -fsSL https://www.mongodb.org/static/pgp/server-3.6.asc | apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+echo "deb https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
 # tee — команда, выводит на экран, или же перенаправляет выходной материал команды и копирует его в файл или в переменную
 apt update
 apt install -y mongodb-org
